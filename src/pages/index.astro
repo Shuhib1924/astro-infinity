@@ -1,8 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-import { faker } from "@faker-js/faker";
-const posts = [{ title: faker.lorem.paragraph(1) }];
+// import { faker } from "@faker-js/faker";
+// const posts = [{ title: faker.lorem.paragraph(1) }];
+import { db, Post } from "astro:db";
+const posts = await db.select().from(Post);
 ---
 
 <Layout title="Welcome to Astro.">
