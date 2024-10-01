@@ -1,0 +1,21 @@
+---
+export const partial = true;
+import Card from "../../components/Card.astro";
+import { db, Post, asc, gt } from "astro:db";
+const cursor = parseInt(Astro.url.searchParams.get("cursor") ?? "");
+const posts = await db
+	.select()
+	.from(Post)
+	.where(cursor ? gt(Post.id, cursor) : undefined)
+	.limit(10)
+	.orderBy(asc(Post.id));
+console.log(cursor);
+---
+
+{
+	posts.map((post: any, i: number, arr: any[]) => {
+		return (
+			<Card post={post as typeof Post} loader={arr.length - 1 === i} />
+		);
+	})
+}
